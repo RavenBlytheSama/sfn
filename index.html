@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R_B个人博客</title>
+  <style>
+    /* 基础重置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f7f5f0;
+      color: #1e1e1e;
+      min-height: 100vh;
+    }
+
+    /* 顶部导航 */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: #ffffff;
+      border-bottom: 1px solid #eae5de;
+      flex-wrap: wrap;
+    }
+
+    .topbar a,
+    .topbar button {
+      font-family: inherit;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.5rem 1.6rem;
+      border-radius: 30px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    /* 首页按钮 —— 主按钮样式（激活时） */
+    .btn-home {
+      background: #1e1e1e;
+      color: #ffffff;
+      border: 1px solid #1e1e1e;
+    }
+
+    .btn-home:hover {
+      background: #3a3a3a;
+      border-color: #3a3a3a;
+    }
+
+    /* 首页按钮 —— 非激活时（在 GitHub 视图） */
+    .btn-home.inactive {
+      background: #f2eee9;
+      color: #2c2c2c;
+      border-color: #e3dcd3;
+    }
+
+    .btn-home.inactive:hover {
+      background: #e6dfd6;
+      border-color: #d6cdc2;
+    }
+
+    /* GitHub 按钮 —— 非激活时（在首页视图） */
+    .btn-github {
+      background: #f2eee9;
+      color: #2c2c2c;
+      border: 1px solid #e3dcd3;
+    }
+
+    .btn-github:hover {
+      background: #e6dfd6;
+      border-color: #d6cdc2;
+    }
+
+    /* GitHub 按钮 —— 激活时（在 GitHub 视图） */
+    .btn-github.active {
+      background: #1e1e1e;
+      color: #ffffff;
+      border-color: #1e1e1e;
+    }
+
+    .btn-github.active:hover {
+      background: #3a3a3a;
+      border-color: #3a3a3a;
+    }
+
+    /* ---------- 主内容区 ---------- */
+    .main-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* 板块标题 */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 550;
+      color: #1e1e1e;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 22px;
+      background: #cbb9a6;
+      border-radius: 8px;
+    }
+
+    /* 链接列表 */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.4rem;
+      background: #ffffff;
+      border: 1px solid #f0ebe5;
+      border-radius: 16px;
+      text-decoration: none;
+      color: #1e1e1e;
+      transition: all 0.2s ease;
+      flex-wrap: wrap;
+    }
+
+    .link-item:hover {
+      border-color: #d6cdc2;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .link-name {
+      font-size: 1rem;
+      font-weight: 550;
+      color: #1e1e1e;
+      white-space: nowrap;
+    }
+
+    .link-url {
+      font-size: 0.85rem;
+      color: #8b7b6b;
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      word-break: break-all;
+    }
+
+    /* ---------- 视图切换 ---------- */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 移动端优化 */
+    @media (max-width: 640px) {
+      .topbar {
+        gap: 0.7rem;
+        padding: 1rem 1rem;
+      }
+
+      .topbar a,
+      .topbar button {
+        font-size: 0.85rem;
+        padding: 0.45rem 1.1rem;
+      }
+
+      .main-content {
+        padding: 1.8rem 1rem 3rem;
+      }
+
+      .link-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="topbar">
+    <button type="button" class="btn-home" id="homeBtn">首页</button>
+    <button type="button" class="btn-github" id="githubBtn">GitHub</button>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+
+    <!-- 视图 1：首页（hosts 板块） -->
+    <section class="view active" id="homeView">
+      <h2 class="section-title">hosts</h2>
+      <div class="link-list">
+        <a href="https://raw.hellogithub.com/hosts" class="link-item" target="_blank" rel="noopener">
+          <span class="link-name">GitHub520</span>
+          <span class="link-url">https://raw.hellogithub.com/hosts</span>
+        </a>
+        <a href="https://raw.githubusercontent.com/maxiaof/github-hosts/master/hosts" class="link-item" target="_blank" rel="noopener">
+          <span class="link-name">maxioaf hosts</span>
+          <span class="link-url">https://raw.githubusercontent.com/maxiaof/github-hosts/master/hosts</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 视图 2：GitHub（我的 Git 仓库） -->
+    <section class="view" id="githubView">
+      <h2 class="section-title">我的 Git 仓库</h2>
+      <div class="link-list">
+        <a href="https://github.com/RavenBlytheSama/ravenblythe-web" class="link-item" target="_blank" rel="noopener">
+          <span class="link-name">ravenblythe-web</span>
+          <span class="link-url">https://github.com/RavenBlytheSama/ravenblythe-web</span>
+        </a>
+        <a href="https://github.com/RavenBlytheSama/sfn-web" class="link-item" target="_blank" rel="noopener">
+          <span class="link-name">sfn-web</span>
+          <span class="link-url">https://github.com/RavenBlytheSama/sfn-web</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      var homeBtn = document.getElementById('homeBtn');
+      var githubBtn = document.getElementById('githubBtn');
+      var homeView = document.getElementById('homeView');
+      var githubView = document.getElementById('githubView');
+
+      function showHome() {
+        homeView.classList.add('active');
+        githubView.classList.remove('active');
+        homeBtn.classList.remove('inactive');
+        githubBtn.classList.remove('active');
+      }
+
+      function showGithub() {
+        githubView.classList.add('active');
+        homeView.classList.remove('active');
+        githubBtn.classList.add('active');
+        homeBtn.classList.add('inactive');
+      }
+
+      homeBtn.addEventListener('click', showHome);
+      githubBtn.addEventListener('click', showGithub);
+    })();
+  </script>
+</body>
+</html>
